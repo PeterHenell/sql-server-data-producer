@@ -9,14 +9,14 @@ namespace SQLDataProducer.Entities.Generators.ForeignKeyGenerators
 {
     public abstract class ForeignKeyGeneratorBase : AbstractValueGenerator
     {
-        public ForeignKeyGeneratorBase(string generatorName, List<string> foreignKeys)
+        protected ForeignKeyGeneratorBase(string generatorName, List<string> foreignKeys)
             : base(generatorName, false)
         {
             // add foreign keys to parameters
-           GeneratorParameters.Add(new GeneratorParameter("Foreign keys"
+            GeneratorParameters.ForeignKeys = new GeneratorParameter("Foreign keys"
                                     , foreignKeys
                                     , GeneratorParameterParser.ObjectParser
-                                    , false));
+                                    , false);
         }
 
         protected override object ApplyGeneratorTypeSpecificLimits(object value)

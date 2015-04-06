@@ -30,7 +30,7 @@ namespace SQLDataProducer.Entities.Generators.DecimalGenerators
         {
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
             return ((RandomSupplier.Instance.GetNextDecimal() * decimal.MaxValue));
         }

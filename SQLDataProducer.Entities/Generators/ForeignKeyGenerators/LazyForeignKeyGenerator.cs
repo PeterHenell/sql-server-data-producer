@@ -16,9 +16,9 @@ namespace SQLDataProducer.Entities.Generators.ForeignKeyGenerators
 
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
-            var foreignKeys = paramas.GetValueOf<List<string>>("Foreign keys");
+            var foreignKeys = GeneratorParameters.ForeignKeys.Value;
             int index = (int)((n % foreignKeys.Count) % int.MaxValue);
             return foreignKeys[index];
         }

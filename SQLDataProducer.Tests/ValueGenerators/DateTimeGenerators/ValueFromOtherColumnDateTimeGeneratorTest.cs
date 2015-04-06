@@ -19,7 +19,7 @@ namespace SQLDataProducer.Tests.ValueGenerators
         public void ShouldGenerateValue()
         {
             var gen = new ValueFromOtherColumnDateTimeGenerator(new ColumnDataTypeDefinition("DateTime2(2)", false));
-            gen.GeneratorParameters["Value From Column"].Value = new ColumnEntity();
+            gen.GeneratorParameters.ValueFromOtherColumn.Value = new ColumnEntity();
             var firstValue = gen.GenerateValue(1);
             Assert.That(firstValue, Is.Not.Null);
         }

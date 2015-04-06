@@ -28,12 +28,12 @@ namespace SQLDataProducer.Entities.Generators.XMLGenerators
         public StaticXmlGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.Add(new GeneratorParameter("Value", "", GeneratorParameterParser.StringParser));
+            GeneratorParameters.Value = new GeneratorParameter("Value", "", GeneratorParameterParser.StringParser);
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
-            return paramas.GetValueOf<string>("Value");
+            return GeneratorParameters.Value.Value;
         }
     }
 }

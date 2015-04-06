@@ -24,11 +24,11 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
 {
     public abstract class IntegerGeneratorBase : AbstractValueGenerator
     {
-        public IntegerGeneratorBase(string generatorName, ColumnDataTypeDefinition dataType, bool isTakingValueFromOtherColumn = false)
+        protected IntegerGeneratorBase(string generatorName, ColumnDataTypeDefinition dataType, bool isTakingValueFromOtherColumn = false)
             : base(generatorName, isTakingValueFromOtherColumn)
         {
-            GeneratorParameters.Add(new GeneratorParameter("MaxValue", dataType.MaxValue, GeneratorParameterParser.LonglParser, false));
-            GeneratorParameters.Add(new GeneratorParameter("MinValue", dataType.MinValue, GeneratorParameterParser.LonglParser, false));
+            GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", dataType.MaxValue, GeneratorParameterParser.LonglParser, false);
+            GeneratorParameters.MinValue = new GeneratorParameter("MinValue", dataType.MinValue, GeneratorParameterParser.LonglParser, false);
         }
 
         protected override object ApplyGeneratorTypeSpecificLimits(object value)
@@ -40,8 +40,8 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
             if (value is long)
             {
                 var newValue = (long)value;
-                var max = GeneratorParameters.GetValueOf<long>("MaxValue");
-                var min = GeneratorParameters.GetValueOf<long>("MinValue");
+                var max = GeneratorParameters.MaxValue.Value;
+                var min = GeneratorParameters.MinValue.Value;
 
                 return Math.Min(Math.Max(min, newValue), max);
             }

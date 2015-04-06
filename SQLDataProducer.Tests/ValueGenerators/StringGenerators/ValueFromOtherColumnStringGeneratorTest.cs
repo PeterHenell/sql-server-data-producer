@@ -19,6 +19,7 @@ namespace SQLDataProducer.Tests.ValueGenerators
         public void ShouldGenerateValue()
         {
             var gen = new ValueFromOtherColumnStringGenerator(new ColumnDataTypeDefinition("VarChar(123)", false));
+            gen.GeneratorParameters.ValueFromOtherColumn.Value = new ColumnEntity();
             var firstValue = gen.GenerateValue(1);
             Assert.That(firstValue, Is.Not.Null);
         }

@@ -28,12 +28,13 @@ namespace SQLDataProducer.Entities.Generators.UniqueIdentifierGenerators
         public StaticGuidGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.Add(new GeneratorParameter("Value", Guid.NewGuid(), GeneratorParameterParser.ObjectParser));
+            GeneratorParameters.Value = new GeneratorParameter("Value", Guid.NewGuid(),
+                GeneratorParameterParser.ObjectParser);
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
-            return GeneratorParameters.GetValueOf<Guid>("Value");
+            return GeneratorParameters.Value.Value;
         }
     }
 }

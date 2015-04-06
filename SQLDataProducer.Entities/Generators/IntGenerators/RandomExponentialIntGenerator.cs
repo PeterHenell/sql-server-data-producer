@@ -28,11 +28,13 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
         public RandomExponentialIntGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.Add(new GeneratorParameter("StartValue", 0, GeneratorParameterParser.IntegerParser));
-            GeneratorParameters.Add(new GeneratorParameter("Step", 1, GeneratorParameterParser.IntegerParser));
+            GeneratorParameters.StartValue = new GeneratorParameter("StartValue", 1,
+               GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.Step = new GeneratorParameter("Step", 1,
+                GeneratorParameterParser.IntegerParser);
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
         //    /// http://www.sqlservercentral.com/articles/SQL+Uniform+Random+Numbers/91103/
         ///// </summary>

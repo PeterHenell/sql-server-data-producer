@@ -48,7 +48,7 @@ namespace SQLDataProducer.Tests.IntegrationTests
             var person = tda.GetTableAndColumns("Person", "NewPerson");
             var personDetail = tda.GetTableAndColumns("Person", "AnotherTable");
             personDetail.Columns.First().Generator = new ValueFromOtherColumnIntGenerator(personDetail.Columns.First().ColumnDataType);
-            personDetail.Columns.First().Generator.GeneratorParameters["Value From Column"].Value = person.Columns.First();
+            personDetail.Columns.First().Generator.GeneratorParameters.ValueFromOtherColumn.Value = person.Columns.First();
 
             ExecutionNode node = ExecutionNode.CreateLevelOneNode(100, "Root");
             node.AddTable(person);

@@ -121,7 +121,7 @@ namespace SQLDataProducer.Tests
                 {
                     if (gen.IsTakingValueFromOtherColumn)
                     {
-                        gen.GeneratorParameters["Value From Column"].Value = new ColumnEntity();
+                        gen.GeneratorParameters.ValueFromOtherColumn.Value = new ColumnEntity();
                     }
                     try
                     {

@@ -24,7 +24,7 @@ namespace SQLDataProducer.Entities.Generators.UniqueIdentifierGenerators
 {
     public abstract class GuidGeneratorBase : AbstractValueGenerator
     {
-        public GuidGeneratorBase(string generatorName, ColumnDataTypeDefinition dataType)
+        protected GuidGeneratorBase(string generatorName, ColumnDataTypeDefinition dataType)
             : base(generatorName)
         {
 

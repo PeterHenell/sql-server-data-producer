@@ -59,7 +59,7 @@ namespace SQLDataProducer.Tests.ConsumerTests.InsertConsumer
 
             var customerIdColumn = DatabaseEntityFactory.CreateColumnEntity("CustomerId", new ColumnDataTypeDefinition("int", false), false, 2, true, null, fk);
             customerIdColumn.Generator = new SQLDataProducer.Entities.Generators.IntGenerators.ValueFromOtherColumnIntGenerator(customerIdColumn.ColumnDataType);
-            customerIdColumn.Generator.GeneratorParameters["Value From Column"].Value = customerId;
+            customerIdColumn.Generator.GeneratorParameters.ValueFromOtherColumn.Value = customerId;
 
             orderTable.AddColumn(customerIdColumn);
             orderTable.AddColumn(DatabaseEntityFactory.CreateColumnEntity("ArticleId", new ColumnDataTypeDefinition("int", false), false, 3, false, null, null));

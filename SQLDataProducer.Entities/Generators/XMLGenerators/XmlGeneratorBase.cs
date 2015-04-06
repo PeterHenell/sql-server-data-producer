@@ -24,7 +24,7 @@ namespace SQLDataProducer.Entities.Generators.XMLGenerators
 {
     public abstract class XmlGeneratorBase : AbstractValueGenerator
     {
-        public XmlGeneratorBase(string generatorName, ColumnDataTypeDefinition dataType)
+        protected XmlGeneratorBase(string generatorName, ColumnDataTypeDefinition dataType)
             : base(generatorName)
         {
 

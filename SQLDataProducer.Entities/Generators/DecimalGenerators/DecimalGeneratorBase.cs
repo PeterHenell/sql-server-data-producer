@@ -23,11 +23,13 @@ namespace SQLDataProducer.Entities.Generators.DecimalGenerators
 {
     public abstract class DecimalGeneratorBase : AbstractValueGenerator
     {
-        public DecimalGeneratorBase(string generatorName, ColumnDataTypeDefinition dataType)
+        protected DecimalGeneratorBase(string generatorName, ColumnDataTypeDefinition dataType)
             : base(generatorName)
         {
-            GeneratorParameters.Add(new GeneratorParameter("MinValue", dataType.MinValue, GeneratorParameterParser.DecimalParser, false));
-            GeneratorParameters.Add(new GeneratorParameter("MaxValue", dataType.MaxValue, GeneratorParameterParser.DecimalParser, false));
+            GeneratorParameters.MinValue = new GeneratorParameter("MinValue", dataType.MinValue,
+               GeneratorParameterParser.DecimalParser, false);
+            GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", dataType.MaxValue,
+                GeneratorParameterParser.DecimalParser, false);
         }
 
         protected override object ApplyGeneratorTypeSpecificLimits(object value)
@@ -36,8 +38,8 @@ namespace SQLDataProducer.Entities.Generators.DecimalGenerators
             {
                 return value;
             }
-            decimal max = GeneratorParameters.GetValueOf<decimal>("MaxValue");
-            decimal min = GeneratorParameters.GetValueOf<decimal>("MinValue");
+            decimal max = GeneratorParameters.MaxValue.Value;
+            decimal min = GeneratorParameters.MinValue.Value;
 
             decimal newvalue = (decimal)value;
             // return the value if it is smaller than the max value and larger than the min value.

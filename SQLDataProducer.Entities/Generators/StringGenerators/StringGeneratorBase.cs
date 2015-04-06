@@ -24,10 +24,11 @@ namespace SQLDataProducer.Entities.Generators.StringGenerators
 {
     public abstract class StringGeneratorBase : AbstractValueGenerator
     {
-        public StringGeneratorBase(string generatorName, ColumnDataTypeDefinition dataType)
-            : base(generatorName)
+        protected StringGeneratorBase(string generatorName, ColumnDataTypeDefinition dataType, bool isTakingValueFromOtherColumn = false)
+            : base(generatorName, isTakingValueFromOtherColumn)
         {
-            GeneratorParameters.Add(new GeneratorParameter("MaxLength", dataType.MaxLength, GeneratorParameterParser.IntegerParser, false));
+            GeneratorParameters.MaxLength = new GeneratorParameter("MaxLength", dataType.MaxLength,
+                GeneratorParameterParser.IntegerParser, false);
         }
 
         protected override object ApplyGeneratorTypeSpecificLimits(object value)
@@ -36,7 +37,7 @@ namespace SQLDataProducer.Entities.Generators.StringGenerators
             {
                 return value;
             }
-            int maxLength = GeneratorParameters.GetValueOf<int>("MaxLength");
+            int maxLength = GeneratorParameters.MaxLength.Value;
             if (value is string)
                 return (value as string).SubstringWithMaxLength(maxLength);
             else

@@ -19,6 +19,7 @@ namespace SQLDataProducer.Tests.ValueGenerators
         public void ShouldGenerateValue()
         {
             var gen = new StaticStringGenerator(new ColumnDataTypeDefinition("VarChar(123)", false));
+            gen.GeneratorParameters.Value.Value = "peter";
             var firstValue = gen.GenerateValue(1);
             Assert.That(firstValue, Is.Not.Null);
         }

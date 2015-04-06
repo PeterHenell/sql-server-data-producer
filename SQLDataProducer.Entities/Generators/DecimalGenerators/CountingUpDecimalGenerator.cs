@@ -28,14 +28,16 @@ namespace SQLDataProducer.Entities.Generators.DecimalGenerators
         public CountingUpDecimalGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.Add(new GeneratorParameter("StartValue", 0.0m, GeneratorParameterParser.DecimalParser));
-            GeneratorParameters.Add(new GeneratorParameter("Step", 1.0m, GeneratorParameterParser.DecimalParser));
+            GeneratorParameters.StartValue = new GeneratorParameter("StartValue", 0.0m,
+                GeneratorParameterParser.DecimalParser);
+            GeneratorParameters.Step = new GeneratorParameter("Step", 1.0m,
+                GeneratorParameterParser.DecimalParser);
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
-            decimal step = paramas.GetValueOf<Decimal>("Step");
-            decimal startValue = paramas.GetValueOf<Decimal>("StartValue");
+            decimal step = GeneratorParameters.Step.Value;
+            decimal startValue = GeneratorParameters.StartValue.Value;
 
             return startValue + (step * (n - 1));
         }

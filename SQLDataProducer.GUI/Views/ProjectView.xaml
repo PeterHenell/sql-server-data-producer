@@ -238,7 +238,7 @@
                                         </DataGridTemplateColumn>
                                         <DataGridCheckBoxColumn Binding="{Binding HasConstraints, Mode=OneWay}" Width="110"
                                             Header="Has Constraints?" IsReadOnly="True"/>
-                                        <DataGridTextColumn Binding="{Binding Generator.GeneratorParameters.NiceString, Mode=OneWay}" Width="*"
+                                        <DataGridTextColumn Binding="{Binding Generator.GeneratorParameters, Mode=OneWay}" Width="*"
                                             Header="Parameters" IsReadOnly="True"/>
                                     </DataGrid.Columns>
                                 </DataGrid>

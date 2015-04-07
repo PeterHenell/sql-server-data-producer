@@ -31,6 +31,7 @@ namespace SQLDataProducer.Entities.Generators
         {
             _generatorName = generatorName;
             GeneratorParameters = new ExpandoObject();
+            
             GeneratorHelpText = GeneratorHelpTextManager.GetGeneratorHelpText(generatorName);
             _isTakingValueFromOtherColumn = isTakingValueFromOtherColumn;
         }
@@ -73,7 +74,7 @@ namespace SQLDataProducer.Entities.Generators
 
         bool _isTakingValueFromOtherColumn = false;
         /// <summary>
-        /// true If this generator is taking value from another column instead of generating its own
+        /// true If this generator is taking value from another column instead of generating its own value.
         /// Used for identity values and other similar
         /// </summary>
         public bool IsTakingValueFromOtherColumn

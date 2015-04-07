@@ -26,10 +26,10 @@ namespace SQLDataProducer.Entities.Generators.DecimalGenerators
         protected DecimalGeneratorBase(string generatorName, ColumnDataTypeDefinition dataType)
             : base(generatorName)
         {
-            GeneratorParameters.MinValue = new GeneratorParameter("MinValue", dataType.MinValue,
-               GeneratorParameterParser.DecimalParser, false);
-            GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", dataType.MaxValue,
-                GeneratorParameterParser.DecimalParser, false);
+            //GeneratorParameters.MinValue = new GeneratorParameter("MinValue", dataType.MinValue,
+            //   GeneratorParameterParser.DecimalParser, false);
+            //GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", dataType.MaxValue,
+            //    GeneratorParameterParser.DecimalParser, false);
         }
 
         protected override object ApplyGeneratorTypeSpecificLimits(object value)
@@ -38,12 +38,12 @@ namespace SQLDataProducer.Entities.Generators.DecimalGenerators
             {
                 return value;
             }
-            decimal max = GeneratorParameters.MaxValue.Value;
-            decimal min = GeneratorParameters.MinValue.Value;
+            //decimal max = GeneratorParameters.MaxValue.Value;
+            //decimal min = GeneratorParameters.MinValue.Value;
 
-            decimal newvalue = (decimal)value;
+            //decimal newvalue = (decimal)value;
             // return the value if it is smaller than the max value and larger than the min value.
-            return Math.Max(Math.Min(newvalue, max), min);
+            return value;//Math.Max(Math.Min(newvalue, max), min);
         }
     }
 }

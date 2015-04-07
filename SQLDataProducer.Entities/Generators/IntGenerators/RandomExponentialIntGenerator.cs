@@ -25,38 +25,40 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
     {
         public static readonly string GENERATOR_NAME = "Exponential Random Numbers";
 
-        public RandomExponentialIntGenerator(ColumnDataTypeDefinition datatype)
-            : base(GENERATOR_NAME, datatype)
+        public RandomExponentialIntGenerator(ColumnDataTypeDefinition dataType)
+            : base(GENERATOR_NAME, dataType)
         {
             GeneratorParameters.StartValue = new GeneratorParameter("StartValue", 1,
                GeneratorParameterParser.IntegerParser);
             GeneratorParameters.Step = new GeneratorParameter("Step", 1,
                 GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", dataType.MaxValue, GeneratorParameterParser.IntegerParser, false);
+            GeneratorParameters.MinValue = new GeneratorParameter("MinValue", dataType.MinValue, GeneratorParameterParser.IntegerParser, false);
         }
 
         protected override object InternalGenerateValue(long n)
         {
-        //    /// http://www.sqlservercentral.com/articles/SQL+Uniform+Random+Numbers/91103/
-        ///// </summary>
-        ///// <returns></returns>
-        //[GeneratorMetaData(Generators.GeneratorMetaDataAttribute.GeneratorType.Integer)]
-        //public static Generator CreateExponentialRandomNumbersGenerator()
-        //{
-        //    GeneratorParameterCollection paramss = new GeneratorParameterCollection();
+            //    /// http://www.sqlservercentral.com/articles/SQL+Uniform+Random+Numbers/91103/
+            ///// </summary>
+            ///// <returns></returns>
+            //[GeneratorMetaData(Generators.GeneratorMetaDataAttribute.GeneratorType.Integer)]
+            //public static Generator CreateExponentialRandomNumbersGenerator()
+            //{
+            //    GeneratorParameterCollection paramss = new GeneratorParameterCollection();
 
-        //    paramss.Add(new GeneratorParameter("Lambda", new decimal(1.1), GeneratorParameterParser.DecimalParser));
+            //    paramss.Add(new GeneratorParameter("Lambda", new decimal(1.1), GeneratorParameterParser.DecimalParser));
 
-        //    Generator gen = new Generator(GENERATOR_ExponentialRandomNumbers, (n, p) =>
-        //    {
-        //        double Lambda = (double)p.GetValueOf<decimal>("Lambda");
-        //        double URN1 = RandomSupplier.Instance.GetNextDouble();
+            //    Generator gen = new Generator(GENERATOR_ExponentialRandomNumbers, (n, p) =>
+            //    {
+            //        double Lambda = (double)p.GetValueOf<decimal>("Lambda");
+            //        double URN1 = RandomSupplier.Instance.GetNextDouble();
 
-        //        //-LOG(@URN)/@Lambda
-        //        return -1.0 * (Math.Log(URN1) / Lambda);
-        //    }
-        //        , paramss);
-        //    return gen;
-        //}
+            //        //-LOG(@URN)/@Lambda
+            //        return -1.0 * (Math.Log(URN1) / Lambda);
+            //    }
+            //        , paramss);
+            //    return gen;
+            //}
             return n;
         }
     }

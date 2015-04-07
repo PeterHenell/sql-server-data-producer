@@ -27,8 +27,8 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
         protected IntegerGeneratorBase(string generatorName, ColumnDataTypeDefinition dataType, bool isTakingValueFromOtherColumn = false)
             : base(generatorName, isTakingValueFromOtherColumn)
         {
-            GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", dataType.MaxValue, GeneratorParameterParser.LonglParser, false);
-            GeneratorParameters.MinValue = new GeneratorParameter("MinValue", dataType.MinValue, GeneratorParameterParser.LonglParser, false);
+            //GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", dataType.MaxValue, GeneratorParameterParser.LonglParser, false);
+            //GeneratorParameters.MinValue = new GeneratorParameter("MinValue", dataType.MinValue, GeneratorParameterParser.LonglParser, false);
         }
 
         protected override object ApplyGeneratorTypeSpecificLimits(object value)
@@ -37,14 +37,14 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
             {
                 return value;
             }
-            if (value is long)
-            {
-                var newValue = (long)value;
-                var max = GeneratorParameters.MaxValue.Value;
-                var min = GeneratorParameters.MinValue.Value;
+            //if (value is long)
+            //{
+            //    var newValue = (long)value;
+            //    var max = GeneratorParameters.MaxValue.Value;
+            //    var min = GeneratorParameters.MinValue.Value;
 
-                return Math.Min(Math.Max(min, newValue), max);
-            }
+            //    return Math.Min(Math.Max(min, newValue), max);
+            //}
             else
             {
                 return value;

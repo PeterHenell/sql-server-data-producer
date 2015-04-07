@@ -28,22 +28,13 @@ namespace SQLDataProducer.Entities.Generators.DateTimeGenerators
         public StaticDateTimeGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.ShiftDays = new GeneratorParameter("Shift Days", 0, GeneratorParameterParser.IntegerParser);
-            GeneratorParameters.ShiftHours = new GeneratorParameter("Shift Hours", 0, GeneratorParameterParser.IntegerParser);
-            GeneratorParameters.ShiftMinutes = new GeneratorParameter("Shift Minutes", 0, GeneratorParameterParser.IntegerParser);
-            GeneratorParameters.ShiftSeconds = new GeneratorParameter("Shift Seconds", 0, GeneratorParameterParser.IntegerParser);
-            GeneratorParameters.ShiftMilliseconds = new GeneratorParameter("Shift Milliseconds", 0, GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.Date = new GeneratorParameter("Date", DateTime.Now, GeneratorParameterParser.DateTimeParser);
         }
 
         protected override object InternalGenerateValue(long n)
         {
-            int d = GeneratorParameters.ShiftDays.Value;
-            int h = GeneratorParameters.ShiftHours.Value;
-            int min = GeneratorParameters.ShiftMinutes.Value;
-            int sec = GeneratorParameters.ShiftSeconds.Value;
-            int ms = GeneratorParameters.ShiftMilliseconds.Value;
-            var ts = new TimeSpan(d, h, min, sec, ms);
-            return DateTime.Now.Add(ts);
+            var dt = (DateTime) GeneratorParameters.Date.Value;
+            return dt;
         }
     }
 }

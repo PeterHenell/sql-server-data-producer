@@ -43,7 +43,7 @@ namespace SQLDataProducer.Entities.Generators.DateTimeGenerators
             {
                 return col.ColumnIdentity;
             }
-            throw new ArgumentNullException("GeneratorParameters.ValueFromOtherColumn");
+            throw new ArgumentNullException("GeneratorParameters.ValueFromOtherColumn.Value");
         }
     }
 }

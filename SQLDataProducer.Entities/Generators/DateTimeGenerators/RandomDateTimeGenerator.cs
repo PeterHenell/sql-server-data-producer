@@ -28,24 +28,18 @@ namespace SQLDataProducer.Entities.Generators.DateTimeGenerators
         public RandomDateTimeGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.ShiftDays = new GeneratorParameter("Shift Days", 0, GeneratorParameterParser.IntegerParser);
-            GeneratorParameters.ShiftHours = new GeneratorParameter("Shift Hours", 0, GeneratorParameterParser.IntegerParser);
-            GeneratorParameters.ShiftMinutes = new GeneratorParameter("Shift Minutes", 0, GeneratorParameterParser.IntegerParser);
-            GeneratorParameters.ShiftSeconds = new GeneratorParameter("Shift Seconds", 0, GeneratorParameterParser.IntegerParser);
-            GeneratorParameters.ShiftMilliseconds = new GeneratorParameter("Shift Milliseconds", 0, GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.MinDate = new GeneratorParameter("Min Date", DateTime.Now, GeneratorParameterParser.DateTimeParser);
+            GeneratorParameters.MaxDate = new GeneratorParameter("Max Date", DateTime.Now + TimeSpan.FromDays(2000), GeneratorParameterParser.DateTimeParser);
         }
 
         protected override object InternalGenerateValue(long n)
         {
             // TODO
-            int d = GeneratorParameters.ShiftDays.Value;
-            int h = GeneratorParameters.ShiftHours.Value;
-            int min = GeneratorParameters.ShiftMinutes.Value;
-            int sec = GeneratorParameters.ShiftSeconds.Value;
-            int ms = GeneratorParameters.ShiftMilliseconds.Value;
-            //int a = n.LongToInt();
-            var ts = new TimeSpan(d, h, min, sec, ms);
-            return DateTime.Now.Add(ts);
+            DateTime start = GeneratorParameters.MinDate.Value;
+            DateTime end = GeneratorParameters.MaxDate.Value;
+
+            long range = (end - start).Ticks;
+            return start.AddTicks(RandomSupplier.Instance.GetNextLong(0, range));
         }
     }
 }

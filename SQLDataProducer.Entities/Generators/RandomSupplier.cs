@@ -29,7 +29,7 @@ namespace SQLDataProducer.Entities.Generators
         }
 
         static RandomSupplier()
-        {        
+        {
         }
 
         RandomSupplier()
@@ -59,13 +59,49 @@ namespace SQLDataProducer.Entities.Generators
                 return (long)((_random.NextDouble() * 2.0 - 1.0) * long.MaxValue);
             }
         }
+
+        public long GetNextLong(long min, long max)
+        {
+            lock (_random)
+            {
+                byte[] buf = new byte[8];
+                _random.NextBytes(buf);
+                long longRand = BitConverter.ToInt64(buf, 0);
+
+                return (Math.Abs(longRand % (max - min)) + min);
+            }
+        }
+
         public decimal GetNextDecimal()
         {
             lock (_random)
             {
-                return (decimal)_random.NextDouble();
+                return _random.NextDecimal();
             }
         }
+
+        public decimal GetNextDecimal(decimal from, decimal to)
+        {
+            lock (_random)
+            {
+                // http://stackoverflow.com/questions/609501/generating-a-random-decimal-in-c-sharp?lq=1
+                byte fromScale = new System.Data.SqlTypes.SqlDecimal(from).Scale;
+                byte toScale = new System.Data.SqlTypes.SqlDecimal(to).Scale;
+                
+                byte scale = (byte)(fromScale + toScale);
+                if (scale > 28)
+                    scale = 28;
+
+                decimal r = new decimal(_random.Next(), _random.Next(), _random.Next(), false, scale);
+                if (Math.Sign(from) == Math.Sign(to) || from == 0 || to == 0)
+                    return decimal.Remainder(r, to - from) + from;
+
+                bool getFromNegativeRange = (double)from + _random.NextDouble() * ((double)to - (double)from) < 0;
+                return getFromNegativeRange ? decimal.Remainder(r, -from) + from : decimal.Remainder(r, to);
+            }
+        }
+
+
         public double GetNextDouble()
         {
             lock (_random)
@@ -74,6 +110,30 @@ namespace SQLDataProducer.Entities.Generators
             }
         }
         readonly Random _random;
-        
+
+    }
+
+    public static class RandomExtensions
+    {
+        public static int NextInt32(this Random rng)
+        {
+            unchecked
+            {
+                int firstBits = rng.Next(0, 1 << 4) << 28;
+                int lastBits = rng.Next(0, 1 << 28);
+                return firstBits | lastBits;
+            }
+        }
+
+        public static decimal NextDecimal(this Random rng)
+        {
+            byte scale = (byte)rng.Next(29);
+            bool sign = rng.Next(2) == 1;
+            return new decimal(rng.NextInt32(),
+                               rng.NextInt32(),
+                               rng.NextInt32(),
+                               sign,
+                               scale);
+        }
     }
 }

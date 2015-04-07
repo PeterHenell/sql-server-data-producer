@@ -28,6 +28,7 @@ namespace SQLDataProducer.Entities.Generators.DateTimeGenerators
         public CurrentDateTimeGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
+            GeneratorParameters.StartDate = new GeneratorParameter("Start Date", DateTime.Now, GeneratorParameterParser.DateTimeParser);
             GeneratorParameters.ShiftDays = new GeneratorParameter("Shift Days", 0, GeneratorParameterParser.IntegerParser);
             GeneratorParameters.ShiftHours = new GeneratorParameter("Shift Hours", 0, GeneratorParameterParser.IntegerParser);
             GeneratorParameters.ShiftMinutes = new GeneratorParameter("Shift Minutes", 0, GeneratorParameterParser.IntegerParser);
@@ -44,7 +45,9 @@ namespace SQLDataProducer.Entities.Generators.DateTimeGenerators
             int ms = GeneratorParameters.ShiftMilliseconds.Value;
 
             var ts = new TimeSpan(d, h, min, sec, ms);
-            return DateTime.Now.Add(ts);
+            DateTime start = GeneratorParameters.StartDate.Value;
+
+            return start.Add(ts);
         }
     }
 }

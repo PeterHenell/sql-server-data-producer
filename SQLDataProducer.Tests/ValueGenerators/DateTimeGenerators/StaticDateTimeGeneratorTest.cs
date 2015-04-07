@@ -1,4 +1,5 @@
 
+using System;
 using NUnit.Framework;
 using MSTest = Microsoft.VisualStudio.TestTools.UnitTesting;
 using SQLDataProducer.Entities.DatabaseEntities;
@@ -19,27 +20,9 @@ namespace SQLDataProducer.Tests.ValueGenerators
         public void ShouldGenerateValue()
         {
             var gen = new StaticDateTimeGenerator(new ColumnDataTypeDefinition("DateTime2(2)", false));
-            var firstValue = gen.GenerateValue(1);
+            var firstValue = (DateTime)gen.GenerateValue(1);
             Assert.That(firstValue, Is.Not.Null);
-        }
-
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStep()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStartValue()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestOverFlow()
-        {
-            
+            Assert.That(firstValue, Is.EqualTo(gen.GeneratorParameters.Date.Value));
         }
     }
 }

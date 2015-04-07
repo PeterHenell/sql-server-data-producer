@@ -19,27 +19,10 @@ namespace SQLDataProducer.Tests.ValueGenerators
         public void ShouldGenerateValue()
         {
             var gen = new StaticNumberDecimalGenerator(new ColumnDataTypeDefinition("Decimal(12)", false));
-            var firstValue = gen.GenerateValue(1);
+            gen.GeneratorParameters.Value.Value = 222m;
+            var firstValue = (decimal)gen.GenerateValue(1);
             Assert.That(firstValue, Is.Not.Null);
-        }
-
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStep()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStartValue()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestOverFlow()
-        {
-            
+            Assert.That(firstValue, Is.EqualTo(222m));
         }
     }
 }

@@ -28,29 +28,13 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
         public StaticIntGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.Add(new GeneratorParameter("StartValue", 0, GeneratorParameterParser.IntegerParser));
-            GeneratorParameters.Add(new GeneratorParameter("Step", 1, GeneratorParameterParser.IntegerParser));
+            GeneratorParameters.Value = new GeneratorParameter("Value", 1,
+                GeneratorParameterParser.IntegerParser);
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
-            //[GeneratorMetaData(Generators.GeneratorMetaDataAttribute.GeneratorType.Integer)]
-            //public static Generator CreateStaticNumberGenerator()
-            //{
-            //    GeneratorParameterCollection paramss = new GeneratorParameterCollection();
-
-            //    paramss.Add(new GeneratorParameter("Number", 0, GeneratorParameterParser.LonglParser));
-
-            //    Generator gen = new Generator(GENERATOR_StaticNumber, (n, p) =>
-            //    {
-            //        long value = p.GetValueOf<long>("Number");
-
-            //        return value;
-            //    }
-            //        , paramss);
-            //    return gen;
-            //}
-            return n;
+            return GeneratorParameters.Value;
         }
     }
 }

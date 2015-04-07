@@ -28,11 +28,15 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
         public RandomIntGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.Add(new GeneratorParameter("StartValue", 0, GeneratorParameterParser.IntegerParser));
-            GeneratorParameters.Add(new GeneratorParameter("Step", 1, GeneratorParameterParser.IntegerParser));
+            GeneratorParameters.StartValue = new GeneratorParameter("StartValue", 1,
+                 GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.Step = new GeneratorParameter("Step", 1,
+                GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", datatype.MaxValue, GeneratorParameterParser.IntegerParser, false);
+            GeneratorParameters.MinValue = new GeneratorParameter("MinValue", datatype.MinValue, GeneratorParameterParser.IntegerParser, false);
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
             //[GeneratorMetaData(Generators.GeneratorMetaDataAttribute.GeneratorType.Integer)]
             //public static Generator CreateRandomIntGenerator(long min, long max)
@@ -44,7 +48,7 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
 
             //    Generator gen = new Generator(GENERATOR_RandomInt, (n, p) =>
             //        {
-            //            long maxValue = p.GetValueOf<long>("MaxValue");
+            //            long maxValue = p.MaxValue;
             //            long minValue = p.GetValueOf<long>("MinValue");
 
             //            return (RandomSupplier.Instance.GetNextInt() % maxValue) + minValue; ;

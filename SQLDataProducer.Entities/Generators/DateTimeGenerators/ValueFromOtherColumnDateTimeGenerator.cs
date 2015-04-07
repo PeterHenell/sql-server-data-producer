@@ -28,22 +28,22 @@ namespace SQLDataProducer.Entities.Generators.DateTimeGenerators
         public ValueFromOtherColumnDateTimeGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype, true)
         {
-            GeneratorParameters.Add(new GeneratorParameter("Value From Column", null, GeneratorParameterParser.ObjectParser));
-            GeneratorParameters.Add(new GeneratorParameter("Shift Days", 0, GeneratorParameterParser.IntegerParser));
-            GeneratorParameters.Add(new GeneratorParameter("Shift Hours", 0, GeneratorParameterParser.IntegerParser));
-            GeneratorParameters.Add(new GeneratorParameter("Shift Minutes", 0, GeneratorParameterParser.IntegerParser));
-            GeneratorParameters.Add(new GeneratorParameter("Shift Seconds", 0, GeneratorParameterParser.IntegerParser));
-            GeneratorParameters.Add(new GeneratorParameter("Shift Milliseconds", 0, GeneratorParameterParser.IntegerParser));
+            GeneratorParameters.ValueFromOtherColumn =  new GeneratorParameter("Value From Column", null, GeneratorParameterParser.ObjectParser);
+            GeneratorParameters.ShiftDays = new GeneratorParameter("Shift Days", 0, GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.ShiftHours = new GeneratorParameter("Shift Hours", 0, GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.ShiftMinutes = new GeneratorParameter("Shift Minutes", 0, GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.ShiftSeconds = new GeneratorParameter("Shift Seconds", 0, GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.ShiftMilliseconds = new GeneratorParameter("Shift Milliseconds", 0, GeneratorParameterParser.IntegerParser);
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
-            ColumnEntity col = paramas.GetValueOf<ColumnEntity>("Value From Column");
+            ColumnEntity col = GeneratorParameters.ValueFromOtherColumn.Value;
             if (col != null)
             {
                 return col.ColumnIdentity;
             }
-            throw new ArgumentNullException("Value From Column");
+            throw new ArgumentNullException("GeneratorParameters.ValueFromOtherColumn.Value");
         }
     }
 }

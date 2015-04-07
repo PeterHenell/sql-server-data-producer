@@ -58,7 +58,7 @@ namespace SQLDataProducer.Tests.ValueGenerators
 
             }
 
-            protected override object InternalGenerateValue(long n, SQLDataProducer.Entities.Generators.Collections.GeneratorParameterCollection paramas)
+            protected override object InternalGenerateValue(long n)
             {
                 return null;    
             }
@@ -88,7 +88,7 @@ namespace SQLDataProducer.Tests.ValueGenerators
             {
                 for (int n = 1; n < 10; n++)
                 {
-                     long maxValue = generator.GeneratorParameters.GetValueOf<long>("MaxValue");
+                    long maxValue = generator.GeneratorParameters.MaxValue.Value;
                      if (n < maxValue)
                      {
                          var value = generator.GenerateValue(n);
@@ -115,7 +115,7 @@ namespace SQLDataProducer.Tests.ValueGenerators
         //    foreach (var generator in PossibleGenerators)
         //    {
         //        Assert.That(generator.GenerateValue(), Is.EqualTo(1));
-        //        long maxValue = generator.GeneratorParameters.GetValueOf<long>("MaxValue");
+        //        long maxValue = generator.GeneratorParameters.MaxValue;
         //        if (maxValue != 1)
         //        {
         //            Assert.That(generator.GenerateValue(), Is.EqualTo(2));
@@ -125,15 +125,15 @@ namespace SQLDataProducer.Tests.ValueGenerators
         //}
 
 
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldHaveOnlyTestedParameters()
-        {
-            foreach (var generator in PossibleGenerators)
-            {
-                Assert.That(generator.GeneratorParameters.Count, Is.EqualTo(4));
-            }
-        }
+        //[Test]
+        //[MSTest.TestMethod]
+        //public void ShouldHaveOnlyTestedParameters()
+        //{
+        //    foreach (var generator in PossibleGenerators)
+        //    {
+        //        Assert.That(generator.GeneratorParameters.Count, Is.EqualTo(4));
+        //    }
+        //}
 
         [Test]
         [MSTest.TestMethod]
@@ -141,10 +141,10 @@ namespace SQLDataProducer.Tests.ValueGenerators
         {
             foreach (var generator in PossibleGenerators)
             {
-                long maxValue = generator.GeneratorParameters.GetValueOf<long>("MaxValue");
+                long maxValue = generator.GeneratorParameters.MaxValue.Value;
                 if (maxValue != 1)
                 {
-                    generator.GeneratorParameters["StartValue"].Value = 10;
+                    generator.GeneratorParameters.StartValue.Value = 10;
                     Assert.That(generator.GenerateValue(1), Is.EqualTo(10));
                     Assert.That(generator.GenerateValue(2), Is.EqualTo(11));
                 }
@@ -158,10 +158,10 @@ namespace SQLDataProducer.Tests.ValueGenerators
         {
             foreach (var generator in PossibleGenerators)
             {
-                 long maxValue = generator.GeneratorParameters.GetValueOf<long>("MaxValue");
+                 long maxValue = generator.GeneratorParameters.MaxValue.Value;
                  if (maxValue != 1)
                  {
-                     generator.GeneratorParameters["Step"].Value = 10;
+                     generator.GeneratorParameters.Step.Value = 10;
                      Assert.That(generator.GenerateValue(1), Is.EqualTo(1));
                      Assert.That(generator.GenerateValue(2), Is.EqualTo(11));
                  }
@@ -174,10 +174,10 @@ namespace SQLDataProducer.Tests.ValueGenerators
         {
             foreach (var generator in PossibleGenerators)
             {
-                long maxValue = generator.GeneratorParameters.GetValueOf<long>("MaxValue");
+                long maxValue = generator.GeneratorParameters.MaxValue.Value;
                 if (maxValue != 1)
                 {
-                    generator.GeneratorParameters["Step"].Value = -1;
+                    generator.GeneratorParameters.Step.Value = -1;
                     Assert.That(generator.GenerateValue(1), Is.EqualTo(1));
                     Assert.That(generator.GenerateValue(2), Is.EqualTo(0));
                 }
@@ -191,14 +191,14 @@ namespace SQLDataProducer.Tests.ValueGenerators
         {
             foreach (var generator in PossibleGenerators)
             {
-                long maxValue = generator.GeneratorParameters.GetValueOf<long>("MaxValue");
+                long maxValue = generator.GeneratorParameters.MaxValue.Value;
                 if (maxValue != 1 && maxValue != long.MaxValue)
                 {
                     Assert.That(generator.GenerateValue(maxValue), Is.EqualTo(maxValue));
                     Assert.That(generator.GenerateValue(maxValue + 1), Is.EqualTo(1));
                     Assert.That(generator.GenerateValue(maxValue + 2), Is.EqualTo(2));
 
-                    generator.GeneratorParameters["MaxValue"].Value = 10;
+                    generator.GeneratorParameters.MaxValue.Value = 10;
                     Assert.That(generator.GenerateValue(11), Is.EqualTo(1));
                     Assert.That(generator.GenerateValue(12), Is.EqualTo(2));
                 }

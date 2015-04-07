@@ -28,12 +28,13 @@ namespace SQLDataProducer.Entities.Generators.DecimalGenerators
         public StaticNumberDecimalGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.Add(new GeneratorParameter("Value", 0.0m, GeneratorParameterParser.DecimalParser));
+            GeneratorParameters.Value = new GeneratorParameter("Value", 0.0m, GeneratorParameterParser.DecimalParser);
+            
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
-            return paramas.GetValueOf<decimal>("Value");
+            return GeneratorParameters.Value.Value;
         }
     }
 }

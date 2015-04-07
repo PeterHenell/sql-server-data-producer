@@ -30,7 +30,7 @@ namespace SQLDataProducer.Entities.Generators.DateTimeGenerators
         {
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
             return DBNull.Value;
         }

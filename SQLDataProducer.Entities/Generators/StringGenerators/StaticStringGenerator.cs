@@ -13,6 +13,7 @@
 //   limitations under the License.
 
 using SQLDataProducer.Entities.DatabaseEntities;
+using SQLDataProducer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,14 +29,15 @@ namespace SQLDataProducer.Entities.Generators.StringGenerators
         public StaticStringGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.Add(new GeneratorParameter("Value", "", GeneratorParameterParser.StringParser));
-            GeneratorParameters.Add(new GeneratorParameter("Length", datatype.MaxLength, GeneratorParameterParser.IntegerParser));
+            GeneratorParameters.Value = new GeneratorParameter("Value", "", GeneratorParameterParser.StringParser);
+            GeneratorParameters.Length = new GeneratorParameter("Length", datatype.MaxLength, GeneratorParameterParser.IntegerParser);
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
-            int l = paramas.GetValueOf<int>("Length");
-            return paramas.GetValueOf<string>("Value").SubstringWithMaxLength(l);
+            int l = GeneratorParameters.Length.Value;
+            // TODO: due to dynamic objet we have to cast these values to get extension methods working
+            return ((string)GeneratorParameters.Value.Value).SubstringWithMaxLength(l);
         }
     }
 }

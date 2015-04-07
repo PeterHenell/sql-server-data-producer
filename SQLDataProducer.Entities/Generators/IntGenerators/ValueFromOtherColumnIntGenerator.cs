@@ -28,12 +28,13 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
         public ValueFromOtherColumnIntGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype, true)
         {
-            GeneratorParameters.Add(new GeneratorParameter("Value From Column", null, GeneratorParameterParser.ObjectParser));
+            GeneratorParameters.ValueFromOtherColumn = new GeneratorParameter("Value From Column", null,
+                GeneratorParameterParser.ObjectParser);
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
-            ColumnEntity col = paramas.GetValueOf<ColumnEntity>("Value From Column");
+            ColumnEntity col = GeneratorParameters.ValueFromOtherColumn.Value;
             if (col != null)
             {
                 return col.ColumnIdentity;

@@ -28,7 +28,7 @@ namespace SQLDataProducer.Entities.Generators.StringGenerators
         public CitiesStringGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.Add(new GeneratorParameter("Length", datatype.MaxLength, GeneratorParameterParser.IntegerParser));
+            GeneratorParameters.Length = new GeneratorParameter("Length", datatype.MaxLength, GeneratorParameterParser.IntegerParser);
         }
 
         private static List<string> _cities;
@@ -44,9 +44,9 @@ namespace SQLDataProducer.Entities.Generators.StringGenerators
             }
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
-            int l = paramas.GetValueOf<int>("Length");
+            int l = GeneratorParameters.Length.Value;
             return Cities[n.LongToInt() % Cities.Count].SubstringWithMaxLength(l);
         }
     }

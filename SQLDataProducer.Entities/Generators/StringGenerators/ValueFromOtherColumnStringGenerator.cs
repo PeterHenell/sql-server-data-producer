@@ -26,15 +26,20 @@ namespace SQLDataProducer.Entities.Generators.StringGenerators
         public static readonly string GENERATOR_NAME = "Value from other Column";
 
         public ValueFromOtherColumnStringGenerator(ColumnDataTypeDefinition datatype)
-            : base(GENERATOR_NAME, datatype)
+            : base(GENERATOR_NAME, datatype, true)
         {
-            //GeneratorParameters.Add(new GeneratorParameter("StartValue", 0.0m, GeneratorParameterParser.DecimalParser));
-            //GeneratorParameters.Add(new GeneratorParameter("Step", 1.0m, GeneratorParameterParser.DecimalParser));
+            GeneratorParameters.ValueFromOtherColumn = new GeneratorParameter("Value From Column", null,
+               GeneratorParameterParser.ObjectParser);
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
-            return n;
+            ColumnEntity col = GeneratorParameters.ValueFromOtherColumn.Value;
+            if (col != null)
+            {
+                return col.ColumnIdentity;
+            }
+            throw new ArgumentNullException("Value From Column");
         }
     }
 }

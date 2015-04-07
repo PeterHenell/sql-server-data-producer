@@ -27,19 +27,30 @@ namespace SQLDataProducer.Tests.ValueGenerators
         [MSTest.TestMethod]
         public void ShouldTestStep()
         {
-            
+            var gen = new CountingUpDecimalGenerator(new ColumnDataTypeDefinition("Decimal(12)", false));
+            gen.GeneratorParameters.Step.Value = 1;
+            gen.GeneratorParameters.StartValue.Value = 1;
+
+            var firstValue = gen.GenerateValue(1);
+            var secondValue = gen.GenerateValue(2);
+            Assert.That(firstValue, Is.EqualTo(1m));
+            Assert.That(secondValue, Is.EqualTo(2m));
         }
+
         [Test]
         [MSTest.TestMethod]
-        public void ShouldTestStartValue()
+        public void ShouldStepDownwards()
         {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestOverFlow()
-        {
-            
+            var gen = new CountingUpDecimalGenerator(new ColumnDataTypeDefinition("Decimal(12)", false));
+            gen.GeneratorParameters.StartValue.Value = 1;
+            gen.GeneratorParameters.Step.Value = -1;
+
+            var firstValue = gen.GenerateValue(1);
+            var secondValue = gen.GenerateValue(2);
+            var thirdValue = gen.GenerateValue(3);
+            Assert.That(firstValue, Is.EqualTo(1m));
+            Assert.That(secondValue, Is.EqualTo(0m));
+            Assert.That(thirdValue, Is.EqualTo(-1m));
         }
     }
 }

@@ -28,15 +28,19 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
         public CountingUpIntGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.Add(new GeneratorParameter("StartValue", 1, GeneratorParameterParser.IntegerParser));
-            GeneratorParameters.Add(new GeneratorParameter("Step", 1, GeneratorParameterParser.IntegerParser));
+            GeneratorParameters.StartValue = new GeneratorParameter("StartValue", 1,
+                GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.Step = new GeneratorParameter("Step", 1,
+                GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", datatype.MaxValue, GeneratorParameterParser.IntegerParser, false);
+            GeneratorParameters.MinValue = new GeneratorParameter("MinValue", datatype.MinValue, GeneratorParameterParser.IntegerParser, false);
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
-            int step = paramas.GetValueOf<int>("Step");
-            int startValue = paramas.GetValueOf<int>("StartValue");
-            long maxValue = paramas.GetValueOf<long>("MaxValue");
+            int step = GeneratorParameters.Step.Value;
+            int startValue = GeneratorParameters.StartValue.Value;
+            long maxValue = GeneratorParameters.MaxValue.Value;
 
             return startValue + ((step * (n - 1)) % maxValue);
         }

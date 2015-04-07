@@ -28,22 +28,27 @@ namespace SQLDataProducer.Entities.Generators.DateTimeGenerators
         public MinutesDateTimeGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.Add(new GeneratorParameter("Shift Days", 0, GeneratorParameterParser.IntegerParser));
-            GeneratorParameters.Add(new GeneratorParameter("Shift Hours", 0, GeneratorParameterParser.IntegerParser));
-            GeneratorParameters.Add(new GeneratorParameter("Shift Minutes", 0, GeneratorParameterParser.IntegerParser));
-            GeneratorParameters.Add(new GeneratorParameter("Shift Seconds", 0, GeneratorParameterParser.IntegerParser));
-            GeneratorParameters.Add(new GeneratorParameter("Shift Milliseconds", 0, GeneratorParameterParser.IntegerParser));
+            GeneratorParameters.StartDate = new GeneratorParameter("Start Date", DateTime.Now, GeneratorParameterParser.DateTimeParser);
+            GeneratorParameters.ShiftDays = new GeneratorParameter("Shift Days", 0, GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.ShiftHours = new GeneratorParameter("Shift Hours", 0, GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.ShiftMinutes = new GeneratorParameter("Shift Minutes", 0, GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.ShiftSeconds = new GeneratorParameter("Shift Seconds", 0, GeneratorParameterParser.IntegerParser);
+            GeneratorParameters.ShiftMilliseconds = new GeneratorParameter("Shift Milliseconds", 0, GeneratorParameterParser.IntegerParser);
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
-            int d = paramas.GetValueOf<int>( "Shift Days");
-                int h = paramas.GetValueOf<int>( "Shift Hours");
-                int min = paramas.GetValueOf<int>( "Shift Minutes");
-                int s = paramas.GetValueOf<int>( "Shift Seconds");
-                int ms = paramas.GetValueOf<int>( "Shift Milliseconds");
-                var ts = new TimeSpan(d, h, min, s, ms);
-                return DateTime.Now.Add(ts);
+            int d = GeneratorParameters.ShiftDays.Value;
+            int h = GeneratorParameters.ShiftHours.Value;
+            int min = GeneratorParameters.ShiftMinutes.Value;
+            int sec = GeneratorParameters.ShiftSeconds.Value;
+            int ms = GeneratorParameters.ShiftMilliseconds.Value;
+            int a = n.LongToInt();
+            var ts = new TimeSpan(d, h, min + a, sec, ms);
+
+            DateTime start = GeneratorParameters.StartDate.Value;
+
+            return start.Add(ts);
         }
     }
 }

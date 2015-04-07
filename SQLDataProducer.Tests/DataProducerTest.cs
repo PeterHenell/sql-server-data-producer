@@ -56,7 +56,7 @@ namespace SQLDataProducer.Tests
             orderTable = new TableEntity("dbo", "Order");
             var customerIdColumn = DatabaseEntityFactory.CreateColumnEntity("CustomerId", new ColumnDataTypeDefinition("int", false), false, 2, true, null, fk);
             customerIdColumn.Generator = new SQLDataProducer.Entities.Generators.IntGenerators.ValueFromOtherColumnIntGenerator(customerIdColumn.ColumnDataType);
-            customerIdColumn.Generator.GeneratorParameters["Value From Column"].Value = customerId;
+            customerIdColumn.Generator.GeneratorParameters.ValueFromOtherColumn.Value = customerId;
 
             orderTable.AddColumn(DatabaseEntityFactory.CreateColumnEntity("OrderId", new ColumnDataTypeDefinition("int", false), true, 1, false, null, null));
             orderTable.AddColumn(customerIdColumn);
@@ -312,7 +312,7 @@ namespace SQLDataProducer.Tests
             var startDate = DatabaseEntityFactory.CreateColumnEntity("StartDate", new ColumnDataTypeDefinition("datetime", false), false, 1, false, null, null);
             var endDate = DatabaseEntityFactory.CreateColumnEntity("EndDate", new ColumnDataTypeDefinition("datetime", false), false, 2, false, null, null);
             endDate.Generator = new ValueFromOtherColumnDateTimeGenerator(endDate.ColumnDataType);
-            endDate.Generator.GeneratorParameters["Value From Column"].Value = startDate;
+            endDate.Generator.GeneratorParameters.ValueFromOtherColumn.Value = startDate;
 
             table.AddColumn(startDate);
             table.AddColumn(endDate);

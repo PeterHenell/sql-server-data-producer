@@ -24,10 +24,11 @@ namespace SQLDataProducer.Entities.Generators.BinaryGenerators
 {
     public abstract class BinaryGeneratorBase : AbstractValueGenerator
     {
-        public BinaryGeneratorBase(string generatorName, ColumnDataTypeDefinition dataType)
+        protected BinaryGeneratorBase(string generatorName, ColumnDataTypeDefinition dataType)
             : base(generatorName)
         {
-            GeneratorParameters.Add(new GeneratorParameter("MaxLength", dataType.MaxLength, GeneratorParameterParser.IntegerParser, false));
+            GeneratorParameters.MaxLength = new GeneratorParameter("MaxLength", dataType.MaxLength,
+                GeneratorParameterParser.IntegerParser, false);
         }
 
         protected override object ApplyGeneratorTypeSpecificLimits(object value)

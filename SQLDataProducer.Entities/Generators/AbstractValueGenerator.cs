@@ -13,6 +13,7 @@
 //   limitations under the License.
 
 
+using System.Dynamic;
 using SQLDataProducer.Entities.DatabaseEntities;
 using SQLDataProducer.Entities.Generators.Collections;
 using System;
@@ -29,43 +30,17 @@ namespace SQLDataProducer.Entities.Generators
         protected AbstractValueGenerator(string generatorName, bool isTakingValueFromOtherColumn = false)
         {
             _generatorName = generatorName;
-            GeneratorParameters = new GeneratorParameterCollection();
+            GeneratorParameters = new ExpandoObject();
+            
             GeneratorHelpText = GeneratorHelpTextManager.GetGeneratorHelpText(generatorName);
             _isTakingValueFromOtherColumn = isTakingValueFromOtherColumn;
         }
 
-        //ThreadLocal<SetCounter> _setCounterThreadWrapper = new ThreadLocal<SetCounter>(() =>
-        //{
-        //    return new SetCounter();
-        //});
 
-        //public SetCounter Counter
-        //{
-        //    // Det verkar som att eftersom den är thread local så delar varje thread på samma SetCounter trots att det är en instansvariabel?
-        //    // Fyra columner = increment * 4
-        //    get { 
-        //        return _setCounterThreadWrapper.Value; 
-        //    }
-        //}
-
-        GeneratorParameterCollection _genParameters;
         /// <summary>
         /// get The parameters for the generator
         /// </summary>
-        public GeneratorParameterCollection GeneratorParameters
-        {
-            get
-            {
-                return _genParameters;
-            }
-            private set
-            {
-                if (_genParameters != value)
-                {
-                    _genParameters = value;
-                }
-            }
-        }
+        public dynamic GeneratorParameters { get; private set; }
 
 
         private readonly string _generatorName;
@@ -99,7 +74,7 @@ namespace SQLDataProducer.Entities.Generators
 
         bool _isTakingValueFromOtherColumn = false;
         /// <summary>
-        /// true If this generator is taking value from another column instead of generating its own
+        /// true If this generator is taking value from another column instead of generating its own value.
         /// Used for identity values and other similar
         /// </summary>
         public bool IsTakingValueFromOtherColumn
@@ -115,28 +90,14 @@ namespace SQLDataProducer.Entities.Generators
             return string.Format("<GeneratorName = '{0}', GeneratorParameters = '{1}'>", GeneratorName, this.GeneratorParameters);
         }
 
-        protected abstract object InternalGenerateValue(long n, GeneratorParameterCollection paramas);
+        protected abstract object InternalGenerateValue(long n);
 
         protected abstract object ApplyGeneratorTypeSpecificLimits(object value);
-        
+
         public object GenerateValue(long n)
         {
-            return ApplyGeneratorTypeSpecificLimits(InternalGenerateValue(n, GeneratorParameters));
+            return ApplyGeneratorTypeSpecificLimits(InternalGenerateValue(n));
         }
-        ///// <summary>
-        ///// Will use internal counter to generate value
-        ///// </summary>
-        ///// <returns></returns>
-        //public object GenerateValue(long n)
-        //{
-        //    //return GenerateValue(Counter.GetNext());
-        //    return GenerateValueInternal(n);
-        //}
-
-        //public void ResetCounter()
-        //{
-        //    Counter.Reset();
-        //}
 
         protected void OnPropertyChanged(string propertyName)
         {
@@ -147,7 +108,7 @@ namespace SQLDataProducer.Entities.Generators
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         public override bool Equals(System.Object obj)
         {
             AbstractValueGenerator p = obj as AbstractValueGenerator;

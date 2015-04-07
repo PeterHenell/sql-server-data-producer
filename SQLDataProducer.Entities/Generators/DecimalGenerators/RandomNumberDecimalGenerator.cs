@@ -28,11 +28,18 @@ namespace SQLDataProducer.Entities.Generators.DecimalGenerators
         public RandomNumberDecimalGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
+            GeneratorParameters.MinValue = new GeneratorParameter("Min Value", 1m,
+                GeneratorParameterParser.DecimalParser);
+            GeneratorParameters.MaxValue = new GeneratorParameter("Max Value", datatype.MaxValue,
+                GeneratorParameterParser.DecimalParser);
         }
 
-        protected override object InternalGenerateValue(long n, Collections.GeneratorParameterCollection paramas)
+        protected override object InternalGenerateValue(long n)
         {
-            return ((RandomSupplier.Instance.GetNextDecimal() * decimal.MaxValue));
+            var min = (decimal)GeneratorParameters.MinValue.Value;
+            var max = (decimal)GeneratorParameters.MaxValue.Value;
+
+            return RandomSupplier.Instance.GetNextDecimal(min, max);
         }
     }
 }

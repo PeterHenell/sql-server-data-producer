@@ -20,26 +20,9 @@ namespace SQLDataProducer.Tests.ValueGenerators
         {
             var gen = new RandomNormalDistributionIntGenerator(new ColumnDataTypeDefinition("TinyInt", false));
             var firstValue = gen.GenerateValue(1);
+            var secondValue = gen.GenerateValue(1);
             Assert.That(firstValue, Is.Not.Null);
-        }
-
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStep()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStartValue()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestOverFlow()
-        {
-            
+            Assert.That(firstValue, Is.Not.EqualTo(secondValue));
         }
     }
 }

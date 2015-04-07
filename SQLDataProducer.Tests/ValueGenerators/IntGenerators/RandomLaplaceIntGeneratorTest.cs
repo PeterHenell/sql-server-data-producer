@@ -20,26 +20,10 @@ namespace SQLDataProducer.Tests.ValueGenerators
         {
             var gen = new RandomLaplaceIntGenerator(new ColumnDataTypeDefinition("TinyInt", false));
             var firstValue = gen.GenerateValue(1);
+            var secondValue = gen.GenerateValue(1);
             Assert.That(firstValue, Is.Not.Null);
-        }
+            Assert.That(firstValue, Is.Not.EqualTo(secondValue));
 
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStep()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStartValue()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestOverFlow()
-        {
-            
         }
     }
 }

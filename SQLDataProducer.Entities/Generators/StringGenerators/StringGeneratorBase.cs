@@ -37,6 +37,11 @@ namespace SQLDataProducer.Entities.Generators.StringGenerators
             {
                 return value;
             }
+            if (IsTakingValueFromOtherColumn)
+            {
+                return value;
+            }
+
             int maxLength = GeneratorParameters.MaxLength.Value;
             if (value is string)
                 return (value as string).SubstringWithMaxLength(maxLength);

@@ -1,4 +1,5 @@
 
+using System;
 using NUnit.Framework;
 using MSTest = Microsoft.VisualStudio.TestTools.UnitTesting;
 using SQLDataProducer.Entities.DatabaseEntities;
@@ -18,28 +19,13 @@ namespace SQLDataProducer.Tests.ValueGenerators
         [MSTest.TestMethod]
         public void ShouldGenerateValue()
         {
+            var expected = Guid.NewGuid();
+
             var gen = new StaticGuidGenerator(new ColumnDataTypeDefinition("UniqueIdentifier", false));
+            gen.GeneratorParameters.Value.Value = expected;
             var firstValue = gen.GenerateValue(1);
             Assert.That(firstValue, Is.Not.Null);
-        }
-
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStep()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStartValue()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestOverFlow()
-        {
-            
+            Assert.That(firstValue, Is.EqualTo(expected));
         }
     }
 }

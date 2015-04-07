@@ -28,12 +28,11 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
         public RandomExponentialIntGenerator(ColumnDataTypeDefinition dataType)
             : base(GENERATOR_NAME, dataType)
         {
-            GeneratorParameters.StartValue = new GeneratorParameter("StartValue", 1,
-               GeneratorParameterParser.IntegerParser);
-            GeneratorParameters.Step = new GeneratorParameter("Step", 1,
-                GeneratorParameterParser.IntegerParser);
-            GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", dataType.MaxValue, GeneratorParameterParser.IntegerParser, false);
-            GeneratorParameters.MinValue = new GeneratorParameter("MinValue", dataType.MinValue, GeneratorParameterParser.IntegerParser, false);
+            GeneratorParameters.StartValue = new GeneratorParameter("Lambda", 1.1m,
+               GeneratorParameterParser.DecimalParser);
+
+            GeneratorParameters.MinValue = new GeneratorParameter("MinValue", dataType.MinValue, GeneratorParameterParser.LonglParser, false);
+            GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", dataType.MaxValue, GeneratorParameterParser.LonglParser, false);
         }
 
         protected override object InternalGenerateValue(long n)
@@ -59,7 +58,10 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
             //        , paramss);
             //    return gen;
             //}
-            return n;
+            // TODO
+            var min = (long)GeneratorParameters.MinValue.Value;
+            var max = (long)GeneratorParameters.MaxValue.Value;
+            return RandomSupplier.Instance.GetNextLong(min, max);
         }
     }
 }

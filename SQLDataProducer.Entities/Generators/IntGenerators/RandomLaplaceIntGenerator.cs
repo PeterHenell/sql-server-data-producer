@@ -28,12 +28,8 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
         public RandomLaplaceIntGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.StartValue = new GeneratorParameter("StartValue", 1,
-               GeneratorParameterParser.IntegerParser);
-            GeneratorParameters.Step = new GeneratorParameter("Step", 1,
-                GeneratorParameterParser.IntegerParser);
-            GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", datatype.MaxValue, GeneratorParameterParser.IntegerParser, false);
-            GeneratorParameters.MinValue = new GeneratorParameter("MinValue", datatype.MinValue, GeneratorParameterParser.IntegerParser, false);
+            GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", datatype.MaxValue, GeneratorParameterParser.LonglParser, false);
+            GeneratorParameters.MinValue = new GeneratorParameter("MinValue", datatype.MinValue, GeneratorParameterParser.LonglParser, false);
         }
 
         protected override object InternalGenerateValue(long n)
@@ -73,7 +69,9 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
             //        , paramss);
             //    return gen;
             //}
-            return n;
+            var min = (long)GeneratorParameters.MinValue.Value;
+            var max = (long)GeneratorParameters.MaxValue.Value;
+            return RandomSupplier.Instance.GetNextLong(min, max);
         }
     }
 }

@@ -22,25 +22,9 @@ namespace SQLDataProducer.Tests.ValueGenerators
             gen.GeneratorParameters.Value.Value = "peter";
             var firstValue = gen.GenerateValue(1);
             Assert.That(firstValue, Is.Not.Null);
+            Assert.That(firstValue, Is.EqualTo("peter"));
         }
 
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStep()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStartValue()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestOverFlow()
-        {
-            
-        }
+       
     }
 }

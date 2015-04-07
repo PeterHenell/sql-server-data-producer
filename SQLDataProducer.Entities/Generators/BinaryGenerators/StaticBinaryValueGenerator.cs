@@ -28,13 +28,12 @@ namespace SQLDataProducer.Entities.Generators.BinaryGenerators
         public StaticBinaryValueGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.StartValue = new GeneratorParameter("StartValue", 0.0m, GeneratorParameterParser.DecimalParser);
-            GeneratorParameters.Step = new GeneratorParameter("Step", 1.0m, GeneratorParameterParser.DecimalParser);
+            GeneratorParameters.Value = new GeneratorParameter("Value", "0x0000", GeneratorParameterParser.StringParser);
         }
 
         protected override object InternalGenerateValue(long n)
         {
-            return n;  
+            return GeneratorParameters.Value.Value;
         }
     }
 }

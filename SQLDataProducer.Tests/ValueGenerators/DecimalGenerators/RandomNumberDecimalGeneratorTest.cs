@@ -36,8 +36,8 @@ namespace SQLDataProducer.Tests.ValueGenerators
             gen.GeneratorParameters.MaxValue.Value = 0m;
             var firstValue = gen.GenerateValue(1);
             Assert.That(firstValue, Is.Not.Null);
-            Assert.That(firstValue, Is.GreaterThan(-20m));
-            Assert.That(firstValue, Is.LessThan(0m));
+            Assert.That(firstValue, Is.GreaterThanOrEqualTo(-20m));
+            Assert.That(firstValue, Is.LessThanOrEqualTo(0m));
         }
 
         [Test]

@@ -19,27 +19,10 @@ namespace SQLDataProducer.Tests.ValueGenerators
         public void ShouldGenerateValue()
         {
             var gen = new StaticIntGenerator(new ColumnDataTypeDefinition("TinyInt", false));
+            gen.GeneratorParameters.Value.Value = 222;
             var firstValue = gen.GenerateValue(1);
             Assert.That(firstValue, Is.Not.Null);
-        }
-
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStep()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStartValue()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestOverFlow()
-        {
-            
+            Assert.That(firstValue, Is.EqualTo(222));
         }
     }
 }

@@ -32,8 +32,8 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
                GeneratorParameterParser.IntegerParser);
             GeneratorParameters.Step = new GeneratorParameter("Step", 1,
                 GeneratorParameterParser.IntegerParser);
-            GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", dataType.MaxValue, GeneratorParameterParser.IntegerParser, false);
-            GeneratorParameters.MinValue = new GeneratorParameter("MinValue", dataType.MinValue, GeneratorParameterParser.IntegerParser, false);
+            GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", dataType.MaxValue, GeneratorParameterParser.LonglParser, false);
+            GeneratorParameters.MinValue = new GeneratorParameter("MinValue", dataType.MinValue, GeneratorParameterParser.LonglParser, false);
         }
 
         protected override object InternalGenerateValue(long n)

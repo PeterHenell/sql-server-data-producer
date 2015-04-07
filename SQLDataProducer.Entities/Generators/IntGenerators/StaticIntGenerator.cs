@@ -29,7 +29,7 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
             : base(GENERATOR_NAME, datatype)
         {
             GeneratorParameters.Value = new GeneratorParameter("Value", 1,
-                GeneratorParameterParser.IntegerParser);
+                GeneratorParameterParser.LonglParser);
         }
 
         protected override object InternalGenerateValue(long n)

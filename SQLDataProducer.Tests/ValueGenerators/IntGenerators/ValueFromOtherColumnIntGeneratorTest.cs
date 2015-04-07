@@ -18,29 +18,13 @@ namespace SQLDataProducer.Tests.ValueGenerators
         [MSTest.TestMethod]
         public void ShouldGenerateValue()
         {
+            var otherColumn = new ColumnEntity();
+
             var gen = new ValueFromOtherColumnIntGenerator(new ColumnDataTypeDefinition("TinyInt", false));
-            gen.GeneratorParameters.ValueFromOtherColumn.Value = new ColumnEntity();
+            gen.GeneratorParameters.ValueFromOtherColumn.Value = otherColumn;
             var firstValue = gen.GenerateValue(1);
             Assert.That(firstValue, Is.Not.Null);
-        }
-
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStep()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStartValue()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestOverFlow()
-        {
-            
+            Assert.That(firstValue, Is.EqualTo(otherColumn.ColumnIdentity));
         }
     }
 }

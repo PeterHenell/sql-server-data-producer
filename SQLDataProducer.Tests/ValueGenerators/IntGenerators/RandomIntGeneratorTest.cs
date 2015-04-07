@@ -20,7 +20,9 @@ namespace SQLDataProducer.Tests.ValueGenerators
         {
             var gen = new RandomIntGenerator(new ColumnDataTypeDefinition("TinyInt", false));
             var firstValue = gen.GenerateValue(1);
+            var secondValue = gen.GenerateValue(1);
             Assert.That(firstValue, Is.Not.Null);
+            Assert.That(firstValue, Is.Not.EqualTo(secondValue));
         }
 
         [Test]

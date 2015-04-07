@@ -29,10 +29,6 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
         public RandomWeibullNumbersIntGenerator(ColumnDataTypeDefinition datatype)
             : base(GENERATOR_NAME, datatype)
         {
-            GeneratorParameters.StartValue = new GeneratorParameter("StartValue", 1,
-                GeneratorParameterParser.IntegerParser);
-            GeneratorParameters.Step = new GeneratorParameter("Step", 1,
-                GeneratorParameterParser.IntegerParser);
             GeneratorParameters.MaxValue = new GeneratorParameter("MaxValue", datatype.MaxValue, GeneratorParameterParser.LonglParser, false);
             GeneratorParameters.MinValue = new GeneratorParameter("MinValue", datatype.MinValue, GeneratorParameterParser.LonglParser, false);
         }
@@ -63,7 +59,9 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
             //        , paramss);
             //    return gen;
             //}
-            return n;
+            var min = (long)GeneratorParameters.MinValue.Value;
+            var max = (long)GeneratorParameters.MaxValue.Value;
+            return RandomSupplier.Instance.GetNextLong(min, max);
         }
     }
 }

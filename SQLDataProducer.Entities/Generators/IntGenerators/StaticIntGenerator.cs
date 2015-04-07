@@ -34,7 +34,7 @@ namespace SQLDataProducer.Entities.Generators.IntGenerators
 
         protected override object InternalGenerateValue(long n)
         {
-            return GeneratorParameters.Value;
+            return GeneratorParameters.Value.Value;
         }
     }
 }

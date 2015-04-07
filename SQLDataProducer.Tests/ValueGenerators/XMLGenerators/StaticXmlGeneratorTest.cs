@@ -18,28 +18,13 @@ namespace SQLDataProducer.Tests.ValueGenerators
         [MSTest.TestMethod]
         public void ShouldGenerateValue()
         {
+            var expectedXML = "<generator does not really parse xml>";
+
             var gen = new StaticXmlGenerator(new ColumnDataTypeDefinition("Xml", false));
+            gen.GeneratorParameters.Value.Value = expectedXML;
             var firstValue = gen.GenerateValue(1);
             Assert.That(firstValue, Is.Not.Null);
-        }
-
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStep()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestStartValue()
-        {
-            
-        }
-        [Test]
-        [MSTest.TestMethod]
-        public void ShouldTestOverFlow()
-        {
-            
+            Assert.That(firstValue, Is.EqualTo(expectedXML));
         }
     }
 }

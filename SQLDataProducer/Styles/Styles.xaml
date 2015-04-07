@@ -387,11 +387,6 @@
     </Style>
     
 
-
-
-
-
-    <!--  -->
     <Style x:Key="DataGridDemoStyle"  TargetType="{x:Type DataGrid}">
         <Setter Property="AlternatingRowBackground" Value="{StaticResource RowBackgroundAlternateBrush}" />
         <Setter Property="BorderBrush" Value="#FF688CAF"/>
@@ -414,5 +409,10 @@
         <Setter Property="ColumnHeaderStyle" Value="{StaticResource DatagridColumnHeaderCustomTemplateStyle}" />
 
 
+    </Style>
+
+
+    <Style TargetType="ListBox">
+        <Setter Property="BorderBrush" Value="Silver"/>
     </Style>
 </ResourceDictionary>

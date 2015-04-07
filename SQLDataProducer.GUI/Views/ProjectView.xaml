@@ -11,8 +11,6 @@
         DataContext="{Binding Project, Source={StaticResource Locator}}">
     <Window.Resources>
 
-
-
         <Style TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
